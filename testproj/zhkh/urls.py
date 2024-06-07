@@ -30,9 +30,11 @@ water_meter_readings_router = NestedSimpleRouter(water_meter_router, r'water-met
 water_meter_readings_router.register(r'water-meter-readings', WaterMeterReadingViewSet, basename='water-meter-readings')
 
 urlpatterns = [
+    path('start-rent-calculation/<int:house_id>', start_rent_calculation),
     path('', include(house_router.urls)),
     path('', include(tariff_routers.urls)),
     path('', include(flat_router.urls)),
     path('', include(water_meter_router.urls)),
     path('', include(water_meter_readings_router.urls)),
+    path('calculate-progress/<str:task_id>/', get_task_progress),
 ]

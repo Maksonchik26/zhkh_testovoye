@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import House, Flat, Tariff, WaterMeter, WaterMeterReading
+from .models import House, Flat, Tariff, WaterMeter, WaterMeterReading, FlatRentCalculation, CalculationProgress
 
 
 class WaterMeterReadingSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class TariffSerializer(serializers.ModelSerializer):
 
 
 class FlatSerializer(serializers.ModelSerializer):
-    water_meters = WaterMeterReadingSerializer(many=True, read_only=True)
+    water_meters = WaterMeterSerializer(many=True, read_only=True)
 
     class Meta:
         model = Flat
@@ -32,7 +32,14 @@ class FlatSerializer(serializers.ModelSerializer):
 
 
 class HouseAddrSerializer(serializers.ModelSerializer):
+    flats = FlatSerializer(many=True, read_only=True)
 
     class Meta:
         model = House
         fields = ["id", "address"]
+
+
+class FlatRentCalculationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FlatRentCalculation
+        fields = '__all__'
